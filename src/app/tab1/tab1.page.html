@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 1
+      Lista de Avisos
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,5 +13,16 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div class="post" *ngFor="let post of arrayPosts">
+    <div class="card text-white bg-primary mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{post.titulo}}</h5>
+        <p class="card-text"> {{post.aviso}}</p>
+        <button style="background-color:yellowgreen;" (click)="editPost(post)">Editar</button>
+        <button style="background-color:red;" (click)="deletePost(post.id)">Eliminar</button>
+      </div>
+      <div class="card-footer">{{post.fecha.split('T')[0]}}</div>
+    </div>
+  </div>
+  
 </ion-content>

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      <div  *ngIf="mode == 'register'">Crear Aviso</div><div  *ngIf="mode == 'edit'">Editar Aviso</div>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,9 +9,81 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+      <ion-title size="large"> <div  *ngIf="mode == 'register'">Crear Aviso</div><div  *ngIf="mode == 'edit'">Editar Aviso</div></ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  <ion-content *ngIf="mode == 'register'">
+        <form [formGroup]="avisoForm" (ngSubmit)="registerAviso()">
+
+          <ion-item>
+              <ion-label>Titulo</ion-label>
+              <ion-input type="text" required formControlName="titulo" ngControl="titulo" ></ion-input>
+              <span *ngIf="avisoForm.get('titulo')?.hasError('required')" class="text-danger">Para crear tu aviso necesitas un titulo</span>
+              <span *ngIf="avisoForm.get('titulo')?.hasError('titulo')" class="text-danger">Lo que ingresaste no es un titulo valido</span>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Aviso</ion-label>
+              <ion-textarea formControlName="aviso" ngControl="aviso"></ion-textarea>
+              <span *ngIf="avisoForm.get('aviso')?.hasError('required')" class="text-danger">Para crear tu aviso necesitas contenido</span>
+              <span *ngIf="avisoForm.get('aviso')?.hasError('aviso')" class="text-danger">Lo que ingresaste no es un aviso valido</span>
+            </ion-item>
+            
+          <ion-item>
+            <ion-label>Fecha del Aviso</ion-label>
+            <ion-datetime formControlName="fecha" displayFormat="DD.MM.YYYY" min="{{date | date:'yyyy'}}"></ion-datetime>
+            <span *ngIf="avisoForm.get('fecha')?.hasError('required')" class="text-danger">Para crear tu aviso necesitas una fecha</span>
+            <span *ngIf="avisoForm.get('fecha')?.hasError('fecha')" class="text-danger">Lo que ingresaste no es una fecha valida</span>
+          </ion-item>
+
+          <button type="submit" class="btn btn-primary btn-block my-2">Crear Aviso</button>
+
+        </form>
+  </ion-content>
+
+  <ion-content *ngIf="mode == 'edit'">
+    <form [formGroup]="updateForm" (ngSubmit)="updateAviso()">
+
+
+      <ion-item>
+        <ion-label>Id</ion-label>
+        <ion-input type="number" required formControlName="idAviso" ngControl="idAviso" [(ngModel)]="data.id"></ion-input>
+        <span *ngIf="avisoForm.get('idAviso')?.hasError('required')" class="text-danger">Para editar tu aviso necesitas un id</span>
+        <span *ngIf="avisoForm.get('idAviso')?.hasError('idAviso')" class="text-danger">Lo que ingresaste no es un id valido</span>
+      </ion-item>
+
+      <ion-item>
+          <ion-label>Titulo</ion-label>
+          <ion-input type="text" required formControlName="titulo" ngControl="titulo" [(ngModel)]="data.titulo" ></ion-input>
+          <span *ngIf="avisoForm.get('titulo')?.hasError('required')" class="text-danger">Para crear tu aviso necesitas un titulo</span>
+          <span *ngIf="avisoForm.get('titulo')?.hasError('titulo')" class="text-danger">Lo que ingresaste no es un titulo valido</span>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Aviso</ion-label>
+          <ion-textarea formControlName="aviso" ngControl="aviso" [(ngModel)]="data.aviso"></ion-textarea>
+          <span *ngIf="avisoForm.get('aviso')?.hasError('required')" class="text-danger">Para crear tu aviso necesitas contenido</span>
+          <span *ngIf="avisoForm.get('aviso')?.hasError('aviso')" class="text-danger">Lo que ingresaste no es un aviso valido</span>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>Tipo de Usuario</ion-label>
+          <ion-textarea formControlName="tipoDeUsuario" ngControl="tipoDeUsuario" [(ngModel)]="data.tipoUsuario"></ion-textarea>
+          <span *ngIf="avisoForm.get('tipoDeUsuario')?.hasError('required')" class="text-danger">Para crear tu aviso necesitas un Tipo de Usuario</span>
+          <span *ngIf="avisoForm.get('tipoDeUsuario')?.hasError('tipoDeUsuario')" class="text-danger">Lo que ingresaste no es un Tipo de Usuario valido</span>
+        </ion-item>
+
+      <ion-item>
+        <ion-label>Fecha del Aviso</ion-label>
+        <ion-datetime formControlName="fecha" displayFormat="DD.MM.YYYY" min="{{date | date:'yyyy'}}" [(ngModel)]="data.fecha"></ion-datetime>
+        <span *ngIf="avisoForm.get('fecha')?.hasError('required')" class="text-danger">Para crear tu aviso necesitas una fecha</span>
+        <span *ngIf="avisoForm.get('fecha')?.hasError('fecha')" class="text-danger">Lo que ingresaste no es una fecha valida</span>
+      </ion-item>
+
+      <button type="submit" class="btn btn-primary btn-block my-2">Crear Aviso</button>
+
+    </form>
+</ion-content>
+
 </ion-content>

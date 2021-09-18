@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 
 @Component({
   selector: 'app-tabs',
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
 export class TabsPage {
 
   constructor() {}
+
+  reload(){
+    window.location.reload();
+  }
 
 }
