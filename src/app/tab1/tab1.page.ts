@@ -36,7 +36,7 @@ export class Tab1Page {
   getAvisos(){
     return new Promise(resolve=>{
       this.http.get(this.url).subscribe(data=>{
-        let jsonObj: any = JSON.parse(JSON.stringify(data)); // string to generic object first
+        let jsonObj: any = JSON.parse(JSON.stringify(data)); 
       let avisos: Avisos = <Avisos>jsonObj;
       this.arrayPosts = avisos;
       },error=>{
